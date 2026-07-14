@@ -8,6 +8,7 @@ const RegisterScreen = ({ navigation }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [hidePassword, setHidePassword] = useState(true);
     const [role, setRole] = useState('exporter');
 
     const { register, isLoading } = useContext(AuthContext);
@@ -51,14 +52,22 @@ const RegisterScreen = ({ navigation }) => {
 
                         <View style={styles.inputContainer}>
                             <Text style={styles.inputLabel}>Password</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Min 8 characters"
-                                placeholderTextColor="#94A3B8"
-                                value={password}
-                                onChangeText={setPassword}
-                                secureTextEntry
-                            />
+                            <View style={styles.passwordWrapper}>
+                                <TextInput
+                                    style={styles.passwordInput}
+                                    placeholder="Min 8 characters"
+                                    placeholderTextColor="#94A3B8"
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry={hidePassword}
+                                />
+                                <TouchableOpacity 
+                                    onPress={() => setHidePassword(!hidePassword)}
+                                    style={styles.showHideButton}
+                                >
+                                    <Text style={styles.showHideText}>{hidePassword ? 'Show' : 'Hide'}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
 
                         <View style={styles.roleContainer}>
@@ -150,6 +159,32 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: colors.border,
         ...shadows.small,
+    },
+    passwordWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: colors.surface,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: colors.border,
+        ...shadows.small,
+    },
+    passwordInput: {
+        flex: 1,
+        paddingHorizontal: spacing.m,
+        paddingVertical: spacing.m,
+        fontSize: 16,
+        color: colors.text,
+    },
+    showHideButton: {
+        paddingHorizontal: spacing.m,
+        paddingVertical: spacing.m,
+        justifyContent: 'center',
+    },
+    showHideText: {
+        color: colors.secondary,
+        fontWeight: 'bold',
+        fontSize: 14,
     },
     roleContainer: {
         marginBottom: spacing.l,
