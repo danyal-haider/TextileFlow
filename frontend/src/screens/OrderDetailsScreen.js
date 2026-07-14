@@ -317,20 +317,20 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                     </>
                 )}
 
-                {/* Action Buttons for Pending Orders */}
-                {order.status === 'pending' && (
+                {/* Action Buttons for Exporter (Pending / Bidding Orders) */}
+                {userInfo?.role !== 'manufacturer' && (order.status === 'pending' || order.status === 'bidding') && !order.winningBid && (
                     <View style={styles.actionButtonsContainer}>
                         <TouchableOpacity
                             onPress={() => navigation.navigate('EditOrder', { order })}
-                            style={[styles.actionButton, styles.updateButton]}
+                            style={[styles.orderActionButton, styles.updateButton]}
                         >
-                            <Text style={styles.actionButtonText}>Update</Text>
+                            <Text style={styles.orderActionButtonText}>Update</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={handleDeleteOrder}
-                            style={[styles.actionButton, styles.deleteButton]}
+                            style={[styles.orderActionButton, styles.deleteButton]}
                         >
-                            <Text style={styles.actionButtonText}>Delete</Text>
+                            <Text style={styles.orderActionButtonText}>Delete</Text>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -413,9 +413,9 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: spacing.l,
     },
-    actionButton: {
+    orderActionButton: {
         flex: 1,
-        height: 60, // Explicit large height
+        height: 50, // Matches standard premium button height
         borderRadius: 12,
         alignItems: 'center',
         justifyContent: 'center',
@@ -429,9 +429,9 @@ const styles = StyleSheet.create({
         backgroundColor: colors.error,
         marginLeft: spacing.s, // Spacing between
     },
-    actionButtonText: {
+    orderActionButtonText: {
         color: '#fff',
-        fontSize: 18, // Increased font size
+        fontSize: 16, // Clean and premium font size
         fontWeight: 'bold',
     },
     statusSection: {
