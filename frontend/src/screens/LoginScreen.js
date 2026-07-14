@@ -61,10 +61,6 @@ const LoginScreen = ({ navigation }) => {
                         </View>
                     </View>
 
-                    <TouchableOpacity style={styles.forgotPassword}>
-                        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-                    </TouchableOpacity>
-
                     <CustomButton
                         title={isLoading ? "Signing In..." : "Login"}
                         onPress={() => login(email, password)}
@@ -157,15 +153,6 @@ const styles = StyleSheet.create({
         color: colors.secondary,
         fontWeight: 'bold',
         fontSize: 14,
-    },
-    forgotPassword: {
-        alignSelf: 'flex-end',
-        marginBottom: spacing.l,
-    },
-    forgotPasswordText: {
-        color: colors.secondary,
-        fontSize: 14,
-        fontWeight: '500',
     },
     loginButton: {
         marginTop: spacing.s,
