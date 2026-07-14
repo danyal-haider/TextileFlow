@@ -75,7 +75,7 @@ const ManufacturerDashboardScreen = ({ navigation }) => {
                     </View>
                 </View>
 
-                <Text style={localStyles.sectionHeader}>Dashboard</Text>
+
 
                 <View style={localStyles.grid}>
                     <DashboardCard

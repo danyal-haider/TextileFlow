@@ -1,5 +1,13 @@
 const User = require('../models/User');
 const Order = require('../models/Order');
+const Bid = require('../models/Bid');
+const Machine = require('../models/Machine');
+const Message = require('../models/Message');
+const Notification = require('../models/Notification');
+const Production = require('../models/Production');
+const QcReport = require('../models/QcReport');
+const fs = require('fs');
+const path = require('path');
 const generateToken = (id) => {
     const jwt = require('jsonwebtoken');
     return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -143,14 +151,98 @@ const getUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const userId = req.params.id;
+        const user = await User.findById(userId);
 
         if (user) {
-            // Delete all orders by this user
-            await Order.deleteMany({ user: req.params.id });
+            // Helper to delete local uploaded files
+            const deleteFileFromUrl = (fileUrl) => {
+                if (!fileUrl) return;
+                try {
+                    const parts = fileUrl.split('/uploads/');
+                    if (parts.length > 1) {
+                        const filename = parts[parts.length - 1];
+                        const localPath = path.join(__dirname, '..', 'uploads', filename);
+                        if (fs.existsSync(localPath)) {
+                            fs.unlinkSync(localPath);
+                            console.log(`Deleted file: ${localPath}`);
+                        }
+                    }
+                } catch (err) {
+                    console.error(`Failed to delete local file for URL ${fileUrl}:`, err);
+                }
+            };
 
-            await User.findByIdAndDelete(req.params.id);
-            res.json({ message: 'User and their orders removed' });
+            // 1. Delete user profile picture file
+            if (user.profilePic) {
+                deleteFileFromUrl(user.profilePic);
+            }
+
+            // 2. Find all orders associated with this user
+            const userOrders = await Order.find({ user: userId });
+            const manufacturerOrders = await Order.find({ manufacturer: userId });
+            const orderIds = [...userOrders.map(o => o._id), ...manufacturerOrders.map(o => o._id)];
+
+            // 3. Find and clean up QC Reports and files
+            const qcReports = await QcReport.find({
+                $or: [
+                    { order: { $in: orderIds } },
+                    { manufacturer: userId }
+                ]
+            });
+            qcReports.forEach(report => {
+                if (report.productImages && report.productImages.length > 0) {
+                    report.productImages.forEach(img => deleteFileFromUrl(img));
+                }
+                if (report.defectImages && report.defectImages.length > 0) {
+                    report.defectImages.forEach(img => deleteFileFromUrl(img));
+                }
+            });
+            await QcReport.deleteMany({ _id: { $in: qcReports.map(r => r._id) } });
+
+            // 4. Find and clean up Chat Messages and attachments
+            const messages = await Message.find({
+                $or: [
+                    { order: { $in: orderIds } },
+                    { sender: userId }
+                ]
+            });
+            messages.forEach(msg => {
+                if (msg.attachment && msg.attachment.url) {
+                    deleteFileFromUrl(msg.attachment.url);
+                }
+            });
+            await Message.deleteMany({ _id: { $in: messages.map(m => m._id) } });
+
+            // 5. Delete Bids placed by user or on their orders
+            await Bid.deleteMany({
+                $or: [
+                    { manufacturer: userId },
+                    { order: { $in: orderIds } }
+                ]
+            });
+
+            // 6. Delete Production logs
+            await Production.deleteMany({ order: { $in: orderIds } });
+
+            // 7. Delete Notifications
+            await Notification.deleteMany({
+                $or: [
+                    { user: userId },
+                    { order: { $in: orderIds } }
+                ]
+            });
+
+            // 8. Delete Machines
+            await Machine.deleteMany({ user: userId });
+
+            // 9. Delete Orders
+            await Order.deleteMany({ _id: { $in: orderIds } });
+
+            // 10. Delete the User
+            await User.findByIdAndDelete(userId);
+
+            res.json({ message: 'User and all associated database records and files cleaned up successfully' });
         } else {
             res.status(404).json({ message: 'User not found' });
         }

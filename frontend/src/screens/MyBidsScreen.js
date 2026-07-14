@@ -121,7 +121,13 @@ const MyBidsScreen = ({ navigation }) => {
     return (
         <ScreenWrapper>
             <View style={styles.container}>
-                <Text style={styles.headerTitle}>My Bids</Text>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Text style={styles.backButtonText}>‹</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitle}>My Bids</Text>
+                    <View style={styles.headerRightSpacer} />
+                </View>
                 {loading ? (
                     <ActivityIndicator size="large" color="#4a90e2" />
                 ) : (
@@ -145,11 +151,33 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
     },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    backButton: {
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    backButtonText: {
+        fontSize: 32,
+        color: '#333',
+        fontWeight: 'bold',
+        lineHeight: 32,
+    },
     headerTitle: {
+        flex: 1,
         fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 20,
         color: '#333',
+        textAlign: 'center',
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     card: {
         backgroundColor: '#fff',

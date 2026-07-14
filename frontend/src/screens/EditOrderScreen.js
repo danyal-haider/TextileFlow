@@ -106,9 +106,10 @@ const EditOrderScreen = ({ navigation, route }) => {
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Text style={styles.backButtonText}>← Back</Text>
+                        <Text style={styles.backButtonText}>‹</Text>
                     </TouchableOpacity>
                     <Text style={styles.title}>Edit Order</Text>
+                    <View style={styles.headerRightSpacer} />
                 </View>
 
                 <View style={styles.form}>
@@ -197,18 +198,29 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: spacing.l,
         marginTop: spacing.s,
     },
     backButton: {
-        marginRight: spacing.m,
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
     backButtonText: {
-        fontSize: 18,
+        fontSize: 32,
         color: colors.primary,
+        fontWeight: 'bold',
+        lineHeight: 32,
     },
     title: {
+        flex: 1,
         ...typography.header,
+        textAlign: 'center',
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     form: {
         flex: 1,

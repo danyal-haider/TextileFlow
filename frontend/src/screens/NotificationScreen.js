@@ -109,7 +109,7 @@ const NotificationScreen = ({ navigation }) => {
             <View style={styles.container}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Text style={styles.backText}>←</Text>
+                        <Text style={styles.backText}>‹</Text>
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>Notifications</Text>
                     {notifications.some(n => !n.read) ? (
@@ -165,11 +165,15 @@ const styles = StyleSheet.create({
     backButton: {
         padding: spacing.xs,
         width: 60,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
     backText: {
-        fontSize: 22,
+        fontSize: 32,
         color: colors.text,
         fontWeight: 'bold',
+        lineHeight: 32,
     },
     headerTitle: {
         ...typography.subheader,

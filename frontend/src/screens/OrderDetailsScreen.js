@@ -110,9 +110,12 @@ const OrderDetailsScreen = ({ route, navigation }) => {
     return (
         <ScreenWrapper>
             <ScrollView contentContainerStyle={styles.container}>
-                {/* Header */}
                 <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Text style={styles.backButtonText}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.title}>Order Details</Text>
+                    <View style={styles.headerRightSpacer} />
                 </View>
 
                 {/* Status Section */}
@@ -382,20 +385,28 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: spacing.l,
     },
     backButton: {
-        paddingRight: spacing.m,
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
     backButtonText: {
         color: colors.primary,
-        fontSize: 16,
+        fontSize: 32,
+        fontWeight: 'bold',
+        lineHeight: 32,
     },
     title: {
-        ...typography.header,
         flex: 1,
+        ...typography.header,
         textAlign: 'center',
-        // marginRight: 40, // Removed to allow space for buttons
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     actionButtonsContainer: {
         flexDirection: 'row',

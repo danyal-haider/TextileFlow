@@ -97,7 +97,11 @@ const ProductionTrackingScreen = ({ navigation, route }) => {
             <View style={{ flex: 1 }}>
                 {/* Header */}
                 <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Text style={styles.backButtonText}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Production Tracking</Text>
+                    <View style={styles.headerRightSpacer} />
                 </View>
 
                 {loading ? (
@@ -265,23 +269,31 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         paddingHorizontal: spacing.m,
         marginBottom: spacing.m,
         marginTop: spacing.s,
     },
     backButton: {
-        marginRight: spacing.m,
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
     backButtonText: {
-        fontSize: 16,
-        color: colors.textLight,
-        fontWeight: '600',
+        fontSize: 32,
+        color: colors.text,
+        fontWeight: 'bold',
+        lineHeight: 32,
     },
     headerTitle: {
-        ...typography.header,
-        fontSize: 20,
         flex: 1,
+        ...typography.header,
+        fontSize: 22,
         textAlign: 'center',
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     loadingContainer: {
         flex: 1,

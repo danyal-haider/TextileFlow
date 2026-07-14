@@ -145,7 +145,11 @@ const CreateOrderScreen = ({ navigation }) => {
         <ScreenWrapper>
             <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Text style={styles.backButtonText}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.title}>Create New Order</Text>
+                    <View style={styles.headerRightSpacer} />
                 </View>
 
                 <View style={styles.form}>
@@ -397,12 +401,31 @@ const styles = StyleSheet.create({
         paddingBottom: 100,
     },
     header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: spacing.l,
         marginTop: spacing.s,
     },
+    backButton: {
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    backButtonText: {
+        fontSize: 32,
+        color: colors.text,
+        fontWeight: 'bold',
+        lineHeight: 32,
+    },
     title: {
+        flex: 1,
         ...typography.header,
         textAlign: 'center',
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     form: {
         flex: 1,

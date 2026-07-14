@@ -75,7 +75,13 @@ const SubmitBidScreen = ({ navigation, route }) => {
     return (
         <ScreenWrapper>
             <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-                <Text style={styles.headerTitle}>Submit Bid</Text>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Text style={styles.backButtonText}>‹</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitle}>Submit Bid</Text>
+                    <View style={styles.headerRightSpacer} />
+                </View>
 
                 {/* Rich Specs Summary Card */}
                 <Card style={styles.orderCard}>
@@ -235,10 +241,32 @@ const styles = StyleSheet.create({
         paddingTop: spacing.m,
         paddingBottom: spacing.xl,
     },
-    headerTitle: {
-        ...typography.header,
-        textAlign: 'center',
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: spacing.l,
+    },
+    backButton: {
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    backButtonText: {
+        fontSize: 32,
+        color: colors.text,
+        fontWeight: 'bold',
+        lineHeight: 32,
+    },
+    headerTitle: {
+        flex: 1,
+        ...typography.header,
+        fontSize: 22,
+        textAlign: 'center',
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     orderCard: {
         backgroundColor: colors.surface,

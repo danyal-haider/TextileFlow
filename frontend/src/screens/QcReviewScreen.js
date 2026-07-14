@@ -129,9 +129,10 @@ const QcReviewScreen = ({ route, navigation }) => {
             <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                        <Text style={styles.backText}>←</Text>
+                        <Text style={styles.backText}>‹</Text>
                     </TouchableOpacity>
                     <Text style={styles.headerTitle}>QC Report Review</Text>
+                    <View style={styles.headerRightSpacer} />
                 </View>
 
                 {/* Audit Header Info Card */}
@@ -219,7 +220,7 @@ const QcReviewScreen = ({ route, navigation }) => {
                             style={[styles.actionBtn, { backgroundColor: colors.success }]}
                         />
                         <CustomButton
-                            title="Reject & Rework"
+                            title="Reject/Rework"
                             onPress={() => setRejectModalVisible(true)}
                             style={[styles.actionBtn, { backgroundColor: colors.error }]}
                         />
@@ -303,24 +304,30 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: spacing.l,
         marginTop: spacing.s,
     },
     backButton: {
-        marginRight: spacing.s,
-        padding: spacing.xs,
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
     backText: {
-        fontSize: 22,
+        fontSize: 32,
         color: colors.text,
         fontWeight: 'bold',
+        lineHeight: 32,
     },
     headerTitle: {
-        ...typography.header,
-        fontSize: 20,
         flex: 1,
+        ...typography.header,
+        fontSize: 22,
         textAlign: 'center',
-        marginRight: 30,
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     loadingContainer: {
         flex: 1,
@@ -448,6 +455,7 @@ const styles = StyleSheet.create({
     actionBtn: {
         width: '48%',
         height: 48,
+        paddingVertical: 0,
         borderRadius: 12,
     },
     modalOverlay: {

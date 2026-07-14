@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import ScreenWrapper from '../components/ScreenWrapper';
 import Card from '../components/Card';
@@ -78,7 +78,11 @@ const BidDetailsScreen = ({ route, navigation }) => {
         <ScreenWrapper>
             <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
                 <View style={styles.header}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                        <Text style={styles.backButtonText}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.title}>Bid Details</Text>
+                    <View style={styles.headerRightSpacer} />
                 </View>
 
                 {/* Bid Cost & Specifications Card */}
@@ -170,12 +174,31 @@ const styles = StyleSheet.create({
         paddingBottom: spacing.xl,
     },
     header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: spacing.l,
         marginTop: spacing.s,
     },
+    backButton: {
+        width: 44,
+        height: 44,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+    backButtonText: {
+        fontSize: 32,
+        color: colors.text,
+        fontWeight: 'bold',
+        lineHeight: 32,
+    },
     title: {
+        flex: 1,
         ...typography.header,
         textAlign: 'center',
+    },
+    headerRightSpacer: {
+        width: 44,
     },
     card: {
         padding: spacing.m,
@@ -277,6 +300,7 @@ const styles = StyleSheet.create({
     button: {
         width: '48%',
         height: 50,
+        paddingVertical: 0,
         borderRadius: 12,
     },
     backBtn: {
