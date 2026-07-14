@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { AuthContext } from '../context/AuthContext';
 import CustomButton from '../components/CustomButton';
 import { colors, spacing, shadows } from '../theme';
@@ -64,8 +65,13 @@ const RegisterScreen = ({ navigation }) => {
                                 <TouchableOpacity 
                                     onPress={() => setHidePassword(!hidePassword)}
                                     style={styles.showHideButton}
+                                    activeOpacity={0.7}
                                 >
-                                    <Text style={styles.showHideText}>{hidePassword ? 'Show' : 'Hide'}</Text>
+                                    <Ionicons 
+                                        name={hidePassword ? "eye-off" : "eye"} 
+                                        size={22} 
+                                        color={colors.textLight} 
+                                    />
                                 </TouchableOpacity>
                             </View>
                         </View>
