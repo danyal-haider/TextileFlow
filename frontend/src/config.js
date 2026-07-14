@@ -9,7 +9,10 @@
 // export const API_URL = 'https://shiny-beers-stop.loca.lt/api';
 
 // Option C: Use ngrok (uncomment if you want to use ngrok)
-export const API_URL = 'https://aileen-fructuous-pseudocourteously.ngrok-free.dev/api';
+// export const API_URL = 'https://aileen-fructuous-pseudocourteously.ngrok-free.dev/api';
+
+// Option D: Use hosted Render backend
+export const API_URL = 'https://textileflow-backend.onrender.com/api';
 
 export const BASE_URL = API_URL;
 
