@@ -8,7 +8,7 @@ import CustomButton from '../components/CustomButton';
 import Card from '../components/Card';
 import { AuthContext } from '../context/AuthContext';
 import { colors, spacing, typography, shadows } from '../theme';
-import { BASE_URL } from '../config';
+import { BASE_URL, resolveImageUri } from '../config';
 
 const ManufacturerProfileScreen = ({ navigation }) => {
     const { userInfo, logout, userToken, updateProfile, changePassword, verifyPassword } = useContext(AuthContext);
@@ -254,7 +254,7 @@ const ManufacturerProfileScreen = ({ navigation }) => {
         setIsEditing(false);
     };
 
-    const avatarUri = profilePic || 'https://ui-avatars.com/api/?name=' + (name || 'Manufacturer') + '&background=0F172A&color=fff&size=150';
+    const avatarUri = resolveImageUri(profilePic) || 'https://ui-avatars.com/api/?name=' + (name || 'Manufacturer') + '&background=0F172A&color=fff&size=150';
 
     return (
         <ScreenWrapper>
@@ -761,14 +761,13 @@ const styles = StyleSheet.create({
     },
     actionButton: {
         marginBottom: spacing.m,
-        height: 48,
         borderRadius: 10,
     },
     logoutButton: {
         borderColor: colors.error,
         borderWidth: 1,
         backgroundColor: colors.error + '05',
-        height: 48,
+        paddingVertical: spacing.m,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',

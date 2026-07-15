@@ -7,7 +7,7 @@ import Card from '../components/Card';
 import CustomInput from '../components/CustomInput';
 import { AuthContext } from '../context/AuthContext';
 import { colors, spacing, typography, shadows } from '../theme';
-import { API_URL } from '../config';
+import { API_URL, resolveImageUri } from '../config';
 
 const ExporterDashboardScreen = ({ navigation }) => {
     const { userInfo, userToken } = useContext(AuthContext);
@@ -119,7 +119,7 @@ const ExporterDashboardScreen = ({ navigation }) => {
 
                         <TouchableOpacity onPress={() => navigation.navigate('ExporterProfile')}>
                             <Image
-                                source={{ uri: userInfo?.profilePic || 'https://ui-avatars.com/api/?name=' + (userInfo?.name || 'User') + '&background=0F172A&color=fff' }}
+                                source={{ uri: resolveImageUri(userInfo?.profilePic) || 'https://ui-avatars.com/api/?name=' + (userInfo?.name || 'User') + '&background=0F172A&color=fff' }}
                                 style={styles.avatar}
                             />
                         </TouchableOpacity>

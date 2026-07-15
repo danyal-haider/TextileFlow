@@ -16,4 +16,28 @@ export const API_URL = 'https://textileflow-backend.onrender.com/api';
 
 export const BASE_URL = API_URL;
 
+// Dynamically resolves local development file paths to the active backend domain
+export const resolveImageUri = (uri) => {
+    if (!uri) return null;
+    
+    // If it's a relative path, append the active backend URL
+    if (uri.startsWith('/')) {
+        const baseUrl = API_URL.replace('/api', '');
+        return `${baseUrl}${uri}`;
+    }
+    
+    // If the database URL points to a local address, but we are connected to Render (or another active backend),
+    // dynamically swap the host so the phone can load the file from the current active server.
+    if (uri.includes('localhost:') || uri.includes('10.0.2.2:') || uri.includes('192.168.')) {
+        const baseUrl = API_URL.replace('/api', '');
+        const uploadPathIndex = uri.indexOf('/uploads/');
+        if (uploadPathIndex !== -1) {
+            const path = uri.substring(uploadPathIndex);
+            return `${baseUrl}${path}`;
+        }
+    }
+    
+    return uri;
+};
+
 // NOTE: Every time you restart ngrok, this URL changes and must be updated here.
