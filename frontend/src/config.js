@@ -20,6 +20,11 @@ export const BASE_URL = API_URL;
 export const resolveImageUri = (uri) => {
     if (!uri) return null;
     
+    // Force HTTPS for production Render URLs to avoid Android cleartext blocking
+    if (uri.startsWith('http://textileflow-backend.onrender.com')) {
+        uri = uri.replace('http://', 'https://');
+    }
+    
     // If it's a relative path, append the active backend URL
     if (uri.startsWith('/')) {
         const baseUrl = API_URL.replace('/api', '');

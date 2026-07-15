@@ -8,7 +8,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import ScreenWrapper from '../components/ScreenWrapper';
 import { AuthContext } from '../context/AuthContext';
 import { colors, spacing, typography, shadows } from '../theme';
-import { BASE_URL } from '../config';
+import { BASE_URL, resolveImageUri } from '../config';
 
 const ChatScreen = ({ route, navigation }) => {
     const { order } = route.params;
@@ -191,7 +191,7 @@ const ChatScreen = ({ route, navigation }) => {
                         item.attachment.mimeType.startsWith('image/') ? (
                             <TouchableOpacity activeOpacity={0.9} onPress={() => setActiveMediaUrl(item.attachment.url)}>
                                 <Image
-                                    source={{ uri: item.attachment.url }}
+                                    source={{ uri: resolveImageUri(item.attachment.url) }}
                                     style={styles.attachmentImage}
                                     resizeMode="cover"
                                 />
@@ -247,7 +247,7 @@ const ChatScreen = ({ route, navigation }) => {
                             activeOpacity={0.8}
                         >
                             <Image 
-                                source={{ uri: otherUser.profilePic || 'https://ui-avatars.com/api/?name=' + (otherUser.name || 'User') + '&background=0F172A&color=fff' }} 
+                                source={{ uri: resolveImageUri(otherUser.profilePic) || 'https://ui-avatars.com/api/?name=' + (otherUser.name || 'User') + '&background=0F172A&color=fff' }} 
                                 style={styles.headerAvatar}
                             />
                             <View style={styles.headerTitleContainer}>
@@ -322,7 +322,7 @@ const ChatScreen = ({ route, navigation }) => {
                     </TouchableOpacity>
                     {activeMediaUrl && (
                         <Image 
-                            source={{ uri: activeMediaUrl }} 
+                            source={{ uri: resolveImageUri(activeMediaUrl) }} 
                             style={styles.modalFullImage} 
                             resizeMode="contain"
                         />

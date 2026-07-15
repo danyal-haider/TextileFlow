@@ -6,7 +6,7 @@ import Card from '../components/Card';
 import CustomButton from '../components/CustomButton';
 import { AuthContext } from '../context/AuthContext';
 import { colors, spacing, typography, shadows } from '../theme';
-import { BASE_URL } from '../config';
+import { BASE_URL, resolveImageUri } from '../config';
 
 const QcReviewScreen = ({ route, navigation }) => {
     const { order } = route.params;
@@ -169,7 +169,7 @@ const QcReviewScreen = ({ route, navigation }) => {
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imagesRow}>
                             {report.productImages.map((url, i) => (
                                 <TouchableOpacity key={i} activeOpacity={0.9} onPress={() => setActiveMediaUrl(url)}>
-                                    <Image source={{ uri: url }} style={styles.image} />
+                                    <Image source={{ uri: resolveImageUri(url) }} style={styles.image} />
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
@@ -183,7 +183,7 @@ const QcReviewScreen = ({ route, navigation }) => {
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imagesRow}>
                             {report.defectImages.map((url, i) => (
                                 <TouchableOpacity key={i} activeOpacity={0.9} onPress={() => setActiveMediaUrl(url)}>
-                                    <Image source={{ uri: url }} style={styles.image} />
+                                    <Image source={{ uri: resolveImageUri(url) }} style={styles.image} />
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
@@ -283,7 +283,7 @@ const QcReviewScreen = ({ route, navigation }) => {
                         </TouchableOpacity>
                         {activeMediaUrl && (
                             <Image 
-                                source={{ uri: activeMediaUrl }} 
+                                source={{ uri: resolveImageUri(activeMediaUrl) }} 
                                 style={styles.modalFullImage} 
                                 resizeMode="contain"
                             />

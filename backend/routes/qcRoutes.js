@@ -33,7 +33,9 @@ router.post('/upload-image', upload.single('file'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ message: 'No media file uploaded' });
     }
-    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    const host = req.get('host');
+    const protocol = host.includes('localhost') || host.includes('127.0.0.1') ? 'http' : 'https';
+    const fileUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
     res.status(200).json({ url: fileUrl });
 });
 

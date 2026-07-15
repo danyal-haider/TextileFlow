@@ -6,7 +6,7 @@ import Card from '../components/Card';
 import CustomButton from '../components/CustomButton';
 import { AuthContext } from '../context/AuthContext';
 import { colors, spacing, typography, shadows } from '../theme';
-import { BASE_URL } from '../config';
+import { BASE_URL, resolveImageUri } from '../config';
 
 const DefectDetailsScreen = ({ route, navigation }) => {
     const { order } = route.params;
@@ -106,7 +106,7 @@ const DefectDetailsScreen = ({ route, navigation }) => {
                             <Text style={[styles.sectionTitle, { color: colors.error }]}>Uploaded Defect Images</Text>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.imagesRow}>
                                 {report.defectImages.map((url, i) => (
-                                    <Image key={i} source={{ uri: url }} style={styles.image} />
+                                    <Image key={i} source={{ uri: resolveImageUri(url) }} style={styles.image} />
                                 ))}
                             </ScrollView>
                         </View>
